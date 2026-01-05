@@ -18,5 +18,11 @@ export const ALL_IMAGES = [
         title: "Forest trail",
         author: "Emily Johnson"
     
+    },
+    {
+        id: 4,
+        url: "https://example.com/image4.jpg",
+        title: "Mountain lake",
+        author: "Michael Brown"
     }
 ]

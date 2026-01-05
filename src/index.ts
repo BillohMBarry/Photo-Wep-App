@@ -29,7 +29,7 @@ router.get("/images", getImage)
  .get('*', () => new Response('Not Found.', { status: 404 }));
 
  export interface Env {
-	PHOTO_KV: KVNamespace;
+	env: KVNamespace;
  }
 
  export default {
