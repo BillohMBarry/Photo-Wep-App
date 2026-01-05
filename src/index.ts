@@ -11,8 +11,25 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		return new Response('Hello World!');
+// export default {
+// 	async fetch(request, env, ctx): Promise<Response> {
+// 		return new Response('Hello World!');
+// 	},
+// } satisfies ExportedHandler<Env>;
+import { Router } from "itty-router";
+import getImage from "./handlers/get_images";
+
+const router = Router();
+
+router.get("/images",getImage)
+ .get('*', () => new Response('Not Found.', { status: 404 }));
+
+ export interface Env {
+	PHOTO_KV: KVNamespace;
+ }
+
+ export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	  return router.fetch(request, env, ctx);
 	},
-} satisfies ExportedHandler<Env>;
+ };
