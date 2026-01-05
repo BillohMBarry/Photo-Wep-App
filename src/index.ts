@@ -18,10 +18,14 @@
 // } satisfies ExportedHandler<Env>;
 import { Router } from "itty-router";
 import getImage from "./handlers/get_images";
+import createImage from "./handlers/create_images";
+import getSingleImage from "./handlers/get_single_image";
 
 const router = Router();
 
-router.get("/images",getImage)
+router.get("/images", getImage)
+ .get("/images/:id", getSingleImage)
+ .post("/images", createImage)	
  .get('*', () => new Response('Not Found.', { status: 404 }));
 
  export interface Env {
