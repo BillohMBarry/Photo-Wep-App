@@ -16,6 +16,7 @@
 // 		return new Response('Hello World!');
 // 	},
 // } satisfies ExportedHandler<Env>;
+import { Env } from "./env";
 import { Router } from "itty-router";
 import getImage from "./handlers/get_images";
 import createImage from "./handlers/create_images";
@@ -23,17 +24,22 @@ import getSingleImage from "./handlers/get_single_image";
 
 const router = Router();
 
-router.get("/images", getImage)
- .get("/images/:id", getSingleImage)
- .post("/images", createImage)	
- .get('*', () => new Response('Not Found.', { status: 404 }));
 
- export interface Env {
-	env: KVNamespace;
- }
+router.get("/", () => new Response("Welcome to the Photo Web App API!"))
+	.get("/images", getImage)
+	.get("/images/", getImage)
+	.get("/images/:id", getSingleImage)
+	.post("/images", createImage)
+	.all('*', (req) => new Response(`Not Found. Path: ${req.url}`, { status: 404 }));
 
- export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-	  return router.fetch(request, env, ctx);
+
+
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext
+	): Promise<Response> {
+		return router.fetch(request, env, ctx);
 	},
- };
+};
