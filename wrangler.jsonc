@@ -9,7 +9,15 @@
 	"compatibility_date": "2026-01-03",
 	"observability": {
 		"enabled": true
-	}
+	},
+	"d1_databases": [
+		{
+			"binding": "phot_web_app_DB",
+			"database_name": "phot-web-app-DB",
+			"database_id": "3c2c02cf-8563-466b-9858-19674a2a403b",
+			"remote": true
+		}
+	]
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
