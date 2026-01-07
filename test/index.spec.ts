@@ -15,56 +15,58 @@ describe('Photo Web App', () => {
 	})
 });
 describe("GET /images", () => {
-	it("returns a 200 ok response"), async () => {
+	it("returns a 200 ok response", async () => {
 		const res = await SELF.fetch(
 			'https://example.com/images',
 		)
 		expect(res.status).toEqual(200)
-	}
+	})
 })
 describe("GET /images", () => {
 	it("should return a 200 OK response", async () => {
-	const response = await SELF.fetch(
-		'http://www.example.com/images'
-	);
-	expect(response.status).toEqual(200);
-});
-it("should return images in the response", async () => {
-	const response = await SELF.fetch('http://www.example.com/images');
-	const json = await response.json();
-	expect(json).toEqual(
+		const response = await SELF.fetch(
+			'http://www.example.com/images'
+		);
+		expect(response.status).toEqual(200);
+	});
+	it("should return images in the response", async () => {
+		const response = await SELF.fetch('http://www.example.com/images');
+		const json = await response.json();
+		expect(json).toEqual(
 			expect.arrayContaining([
-			expect.objectContaining(
-			{ id: 3, url: 'https://example.com/image3.jpg', title: 'Forest trail',
-			author: 'Emily Johnson' }
-		)]));
+				expect.objectContaining(
+					{
+						id: 3, url: 'https://example.com/image3.jpg', title: 'Forest trail',
+						author: 'Emily Johnson'
+					}
+				)]));
 	});
 });
 it("should return a set number of images if count is provided", async () => {
 	const res = await SELF.fetch('http://www.example.com/images?count=2');
 	const json = await res.json();
-	expect(json).toHaveLength(2); 
+	expect(json).toHaveLength(2);
 })
 describe("POST /images", () => {
 	it("should return a 201 response code", async () => {
 		const payLoad = {
 			id: 4,
 			url: "https://example.com/image4.jpg",
-            author: "Michael Brown"
-	    }	
+			author: "Michael Brown"
+		}
 		const res = await SELF.fetch('http://www.example.com/images', {
 			method: 'POST',
 			body: JSON.stringify(payLoad),
 
 		})
-		expect(res.status).toEqual(201); 
+		expect(res.status).toEqual(201);
 	})
 	it("should return the created image in the response", async () => {
 		const newImage = {
 			id: 4,
 			url: "https://example.com/image4.jpg",
-            author: "Michael Brown"
-	    }	
+			author: "Michael Brown"
+		}
 		const res = await SELF.fetch('http://www.example.com/images', {
 			method: 'POST',
 			body: JSON.stringify(newImage),
@@ -76,4 +78,22 @@ describe("POST /images", () => {
 			)
 		);
 	})
+});
+
+describe("GET /images/:id", () => {
+	it("returns a 200 OK response when image exists", async () => {
+		const res = await SELF.fetch('http://example.com/images/1');
+		expect(res.status).toEqual(200);
+		const json = await res.json();
+		expect(json).toEqual(
+			expect.objectContaining({
+				id: 1
+			})
+		);
+	});
+
+	it("returns a 404 response when image does not exist", async () => {
+		const res = await SELF.fetch('http://example.com/images/999');
+		expect(res.status).toEqual(404);
+	});
 });		
