@@ -10,6 +10,9 @@
 	"observability": {
 		"enabled": true
 	},
+	"services": [
+		{ "binding": "AUTH", "service": "authentication-service"}
+	],
 	"d1_databases": [
 		{
 			"binding": "photo_web_app_DB",
